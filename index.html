@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CambioAlDía | Tasas y Calculadora Cambiaria</title>
+  <meta name="description" content="Consulta tasas BCV, Paralelo, Euro y USDT, calcula brechas cambiarias y comparte montos listos para WhatsApp." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="logo-icon">Bs</div>
+        <div>
+          <h1>CambioAlDía</h1>
+          <p id="last-updated">Actualizado hoy</p>
+        </div>
+      </div>
+      <button id="open-settings-btn" class="icon-btn" title="Editar tasas" aria-label="Editar tasas">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        <span>Tasas</span>
+      </button>
+    </header>
+
+    <!-- Tarjetas de Tasas -->
+    <section class="rates-grid" aria-label="Tasas de referencia">
+      <button class="rate-card active" data-rate="bcv">
+        <div class="rate-header">
+          <span class="badge badge-bcv">BCV Oficial</span>
+          <span class="currency-tag">USD</span>
+        </div>
+        <div class="rate-value" id="display-bcv">Bs. 0,00</div>
+      </button>
+
+      <button class="rate-card" data-rate="paralelo">
+        <div class="rate-header">
+          <span class="badge badge-paralelo">Paralelo</span>
+          <span class="currency-tag">USD</span>
+        </div>
+        <div class="rate-value" id="display-paralelo">Bs. 0,00</div>
+      </button>
+
+      <button class="rate-card" data-rate="eur">
+        <div class="rate-header">
+          <span class="badge badge-eur">Euro BCV</span>
+          <span class="currency-tag">EUR</span>
+        </div>
+        <div class="rate-value" id="display-eur">Bs. 0,00</div>
+      </button>
+
+      <button class="rate-card" data-rate="usdt">
+        <div class="rate-header">
+          <span class="badge badge-usdt">Binance P2P</span>
+          <span class="currency-tag">USDT</span>
+        </div>
+        <div class="rate-value" id="display-usdt">Bs. 0,00</div>
+      </button>
+    </section>
+
+    <!-- Indicador de Brecha Cambiaria -->
+    <section class="spread-banner">
+      <div class="spread-info">
+        <span class="spread-label">Brecha Cambiaria (Paralelo vs BCV)</span>
+        <strong id="spread-diff">+Bs. 0,00</strong>
+      </div>
+      <span class="spread-pill" id="spread-percent">0,00%</span>
+    </section>
+
+    <!-- Calculadora Bidireccional -->
+    <main class="calculator-card">
+      <div class="calc-header">
+        <h2>Calculadora Rápida</h2>
+        <span id="active-rate-label" class="active-rate-pill">Usando: BCV (Bs. 0,00)</span>
+      </div>
+
+      <div class="input-group">
+        <label for="foreign-input" id="foreign-label">Monto en Dólares (USD)</label>
+        <div class="input-wrapper">
+          <span class="prefix" id="foreign-prefix">$</span>
+          <input type="number" id="foreign-input" placeholder="0.00" step="any" inputmode="decimal" />
+          <button type="button" class="clear-btn" id="clear-foreign" title="Limpiar">×</button>
+        </div>
+      </div>
+
+      <div class="swap-divider">
+        <div class="line"></div>
+        <div class="swap-badge">⇅ Conversión automática</div>
+        <div class="line"></div>
+      </div>
+
+      <div class="input-group">
+        <label for="ves-input">Monto en Bolívares (VES)</label>
+        <div class="input-wrapper">
+          <span class="prefix">Bs.</span>
+          <input type="number" id="ves-input" placeholder="0.00" step="any" inputmode="decimal" />
+          <button type="button" class="clear-btn" id="clear-ves" title="Limpiar">×</button>
+        </div>
+      </div>
+
+      <!-- Montos rápidos -->
+      <div class="quick-amounts">
+        <button type="button" class="chip" data-amount="5">$5</button>
+        <button type="button" class="chip" data-amount="10">$10</button>
+        <button type="button" class="chip" data-amount="20">$20</button>
+        <button type="button" class="chip" data-amount="50">$50</button>
+        <button type="button" class="chip" data-amount="100">$100</button>
+      </div>
+
+      <!-- Vista previa y botones de acción -->
+      <div class="share-preview" id="share-preview">
+        Ingresa un monto para generar el resumen listo para enviar.
+      </div>
+
+      <div class="actions-row">
+        <button type="button" id="copy-btn" class="btn btn-secondary">
+          Copiar resumen
+        </button>
+        <button type="button" id="whatsapp-btn" class="btn btn-whatsapp">
+          Enviar por WhatsApp
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal de Ajustes de Tasas -->
+  <div id="settings-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-title">Editar Tasas de Referencia</h3>
+        <button id="close-settings-btn" class="close-modal" aria-label="Cerrar">&times;</button>
+      </div>
+      <form id="rates-form">
+        <div class="form-field">
+          <label for="input-bcv">Tasa BCV (USD → Bs.)</label>
+          <input type="number" id="input-bcv" step="0.01" min="0.01" required />
+        </div>
+        <div class="form-field">
+          <label for="input-paralelo">Tasa Paralelo (USD → Bs.)</label>
+          <input type="number" id="input-paralelo" step="0.01" min="0.01" required />
+        </div>
+        <div class="form-field">
+          <label for="input-eur">Tasa Euro BCV (EUR → Bs.)</label>
+          <input type="number" id="input-eur" step="0.01" min="0.01" required />
+        </div>
+        <div class="form-field">
+          <label for="input-usdt">Tasa USDT P2P (USDT → Bs.)</label>
+          <input type="number" id="input-usdt" step="0.01" min="0.01" required />
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="reset-defaults-btn" class="btn btn-ghost">Restaurar</button>
+          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden">¡Copiado al portapapeles!</div>
+
+  <script src="app.js"></script>
+</body>
+</html>
